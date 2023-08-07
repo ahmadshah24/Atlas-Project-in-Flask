@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Stock{% endblock title %}
+{% block body %}
+<div class="container my-5">
+    <h2>Stock Details</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Purchased</th>
+                <th>Sold</th>
+                <th>Remaining</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.purchased_product }}</td>
+                <td>{{ product.sold_product }}</td>
+                <td>{{ product.reminder_product }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock body %}

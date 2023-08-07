@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Purchase{% endblock title %}
+
+{% block body %}
+<div class="container my-5">
+    <h2>Edit Purchase</h2>
+    <form method="post" action="{{ url_for('update_purchase', purchase_id=purchase.id) }}">
+        <div class="form-group">
+            <label for="vendor">Vendor</label>
+            <select class="form-control" id="vendor" name="vendor" required>
+                {% for vendor in vendors %}
+                <option value="{{ vendor.id }}" {% if vendor.id == purchase.vendor.id %}selected{% endif %}>{{ vendor.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="product">Product</label>
+            <select class="form-control" id="product" name="product" required>
+                {% for product in products %}
+                <option value="{{ product.id }}" {% if product.id == purchase.product.id %}selected{% endif %}>{{ product.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" class="form-control" id="date" name="date" value="{{ purchase.date.strftime('%Y-%m-%d') }}" required>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" value="{{ purchase.quantity }}" required>
+        </div>
+        <div class="form-group">
+            <label for="unitprice">Unit Price</label>
+            <input type="number" step="0.01" class="form-control" id="unitprice" name="unitprice" value="{{ purchase.unitprice }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Purchase</button>
+    </form>
+</div>
+{% endblock body %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Edit Return{% endblock title %}
+{% block body %}
+<div class="container my-5">
+    <h2>Edit Return</h2>
+    <form method="post" action="{{ url_for('update_return', return_id=return_obj.id) }}">
+        <div class="form-group">
+            <label for="customer">Customer</label>
+            <select class="form-control" id="customer" name="customer" required>
+                {% for customer in customers %}
+                <option value="{{ customer.id }}" {% if customer.id == return_obj.customer.id %}selected{% endif %}>{{ customer.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="product">Product</label>
+            <select class="form-control" id="product" name="product" required>
+                {% for product in products %}
+                <option value="{{ product.id }}" {% if product.id == return_obj.product.id %}selected{% endif %}>{{ product.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" class="form-control" id="date" name="date" value="{{ return_obj.date }}" required>
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount</label>
+            <input type="number" class="form-control" id="amount" name="amount" value="{{ return_obj.amount }}" required>
+        </div>
+        <div class="form-group">
+            <label for="unitprice">Unit Price</label>
+            <input type="number" step="0.01" class="form-control" id="unitprice" name="unitprice" value="{{ return_obj.unitprice }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+{% endblock body %}

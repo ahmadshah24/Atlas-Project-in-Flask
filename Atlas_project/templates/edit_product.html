@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Edit Product{% endblock title %}
+{% block body %}
+<div class="container my-5">
+    <h2>Edit Product</h2>
+    <form method="post" action="{{ url_for('edit_product', product_id=product_obj.id) }}">
+        <div class="form-group">
+            <label for="name">Product Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ product_obj.name }}" required>
+        </div>
+        <div class="form-group">
+            <label for="type">Product Type</label>
+            <input type="text" class="form-control" id="type" name="type" value="{{ product_obj.type }}" required>
+        </div>
+        <div class="form-group">
+            <label for="size">Product Size</label>
+            <input type="text" class="form-control" id="size" name="size" value="{{ product_obj.size }}" required>
+        </div>
+        <div class="form-group">
+            <label for="PR">Product PR</label>
+            <input type="text" class="form-control" id="PR" name="PR" value="{{ product_obj.PR }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+{% endblock body %}

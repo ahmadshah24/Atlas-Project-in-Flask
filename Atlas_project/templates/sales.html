@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %}Sales{% endblock title %}
+{% block body %}
+<div class="container my-5">
+    <h2>Sales</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product Name</th>
+                <th>Customer Name</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+                <th>Controls</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale, product_name, customer_name in sales %}
+            <tr>
+                <td>{{ sale.id }}</td>
+                <td>{{ product_name }}</td>
+                <td>{{ customer_name }}</td>
+                <td>{{ sale.date }}</td>
+                <td>{{ sale.amount }}</td>
+                <td>{{ sale.unitprice }}</td>
+                <td>{{ sale.total }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('delete_sale', sale_id=sale.id) }}" onsubmit="return confirm('Are you sure you want to delete this sale?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        <a href="{{ url_for('update_sale', sale_id=sale.id) }}" class="btn btn-primary btn-sm">Update</a>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="6" style="text-align: right;"><strong>Total</strong></td>
+                <td><strong>{{ total_sum }}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary" id="addSaleBtn">Add Sale</button>
+</div>
+
+<!-- The form to add a new sale (hidden by default) -->
+<div class="container my-5" id="saleFormContainer" style="display: none;">
+    <h2>Add Sale</h2>
+    <form method="post" action="{{ url_for('add_sale') }}">
+        <div class="form-group">
+            <label for="product_name">Product Name</label>
+            <select class="form-control" id="product_name" name="product_name" required>
+                {% for product in products %}
+                <option value="{{ product.name }}">{{ product.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="customer_name">Customer Name</label>
+            <select class="form-control" id="customer_name" name="customer_name" required>
+                {% for customer in customers %}
+                <option value="{{ customer.name }}">{{ customer.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" class="form-control" id="date" name="date" required>
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount</label>
+            <input type="number" class="form-control" id="amount" name="amount" required>
+        </div>
+        <div class="form-group">
+            <label for="unitprice">Unit Price</label>
+            <input type="number" step="0.01" class="form-control" id="unitprice" name="unitprice" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+</div>
+
+<!-- Add jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- JavaScript code to handle the Add Sale button -->
+<script>
+$(document).ready(function() {
+    $("#addSaleBtn").click(function() {
+        $("#saleFormContainer").toggle();
+    });
+});
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    var todayDate = yyyy + '-' + mm + '-' + dd;
+    $("#date").val(todayDate);
+</script>
+{% endblock body %}
